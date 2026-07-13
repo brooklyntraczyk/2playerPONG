@@ -3,14 +3,13 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 public class Paddle extends Rectangle{
-    //id refers to which player is being talked about
-    int id;
-    int yVelocity;
-    int speed = 10;
+    int id; //id refers to which player is being talked about
+    int yVelocity; //just goes up and down
+    int speed = 10; //how fast paddle moves
 
     Paddle(int x, int y, int PADDLE_WIDTH, int PADDLE_HEIGHT, int id){
         super(x,y,PADDLE_WIDTH,PADDLE_HEIGHT);
-        this.id=id;
+        this.id = id;
     }
 
     public void keyPressed(KeyEvent e) {
