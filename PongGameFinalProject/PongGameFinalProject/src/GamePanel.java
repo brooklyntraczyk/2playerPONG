@@ -26,20 +26,20 @@ public class GamePanel extends JPanel implements Runnable{
     GamePanel(){
         newPaddles();
         newBall();
-        score = new Score(GAME_WIDTH,GAME_HEIGHT);
+        score = new Score(GAME_WIDTH,GAME_HEIGHT); //set score (0-0)
         this.setFocusable(true);
-        this.addKeyListener(new AL());
+        this.addKeyListener(new AL()); //keyboard keys
         this.setPreferredSize(SCREEN_SIZE);
 
         gameThread = new Thread(this);
         gameThread.start();
     }
 
-    public void newBall() {
+    public void newBall() { //reset ball
         random = new Random();
         ball = new Ball((GAME_WIDTH/2)-(BALL_DIAMETER/2),random.nextInt(GAME_HEIGHT-BALL_DIAMETER),BALL_DIAMETER,BALL_DIAMETER);
     }
-    public void newPaddles() {
+    public void newPaddles() { //reset paddles
         paddle1 = new Paddle(0,(GAME_HEIGHT/2)-(PADDLE_HEIGHT/2),PADDLE_WIDTH,PADDLE_HEIGHT,1);
         paddle2 = new Paddle(GAME_WIDTH-PADDLE_WIDTH,(GAME_HEIGHT/2)-(PADDLE_HEIGHT/2),PADDLE_WIDTH,PADDLE_HEIGHT,2);
     }
@@ -50,44 +50,30 @@ public class GamePanel extends JPanel implements Runnable{
         g.drawImage(image,0,0,this);
     }
     public void draw(Graphics g) {
-        if(!gameStarted) {
+        if(!gameStarted) { //intro screen
 
             g.setColor(Color.pink);
             g.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-
             g.setColor(Color.WHITE);
 
             g.setFont(new Font("Consolas", Font.BOLD, 70));
             String title = "2-PLAYER PONG GAME";
-
             FontMetrics titleMetrics = getFontMetrics(g.getFont());
-
-            g.drawString(
-                    title,
-                    (GAME_WIDTH - titleMetrics.stringWidth(title))/2, 150);
+            g.drawString(title, (GAME_WIDTH - titleMetrics.stringWidth(title))/2, 150);
 
             g.setFont(new Font("Consolas", Font.PLAIN, 40));
-
             String rules = "First to 10 Wins";
             FontMetrics rulesMetrics = getFontMetrics(g.getFont());
-
-            g.drawString(
-                    rules,
-                    (GAME_WIDTH - rulesMetrics.stringWidth(rules))/2, 260);
+            g.drawString(rules, (GAME_WIDTH - rulesMetrics.stringWidth(rules))/2, 260);
 
             String start = "Press SPACE to Start";
             FontMetrics startMetrics = getFontMetrics(g.getFont());
-
             g.drawString(start, (GAME_WIDTH - startMetrics.stringWidth(start))/2, 360);
 
             g.setFont(new Font("Consolas", Font.PLAIN, 12));
-
             g.setColor(Color.white);
-
             String credit = "Concept inspired by Bro Code's Pong tutorial";
-
             FontMetrics creditMetrics = getFontMetrics(g.getFont());
-
             g.drawString(credit, (GAME_WIDTH - creditMetrics.stringWidth(credit))/2, GAME_HEIGHT - 20);
 
 
@@ -98,7 +84,7 @@ public class GamePanel extends JPanel implements Runnable{
             g.drawString(creator, (GAME_WIDTH - creatorMetrics.stringWidth(creator))/2, GAME_HEIGHT - 45);
         }
 
-        else if(!gameOver) {
+        else if(!gameOver) { //draw pieces on the game screen
 
             paddle1.draw(g);
             paddle2.draw(g);
@@ -106,7 +92,7 @@ public class GamePanel extends JPanel implements Runnable{
             score.draw(g);
         }
 
-        else {
+        else { //game end: win screen
 
             g.setColor(Color.pink);
             g.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
@@ -115,11 +101,10 @@ public class GamePanel extends JPanel implements Runnable{
             g.setFont(new Font("Consolas", Font.BOLD, 75));
 
             FontMetrics metrics = getFontMetrics(g.getFont());
-
             g.drawString(winner, (GAME_WIDTH - metrics.stringWidth(winner))/2, GAME_HEIGHT/2);
         }
 
-        Toolkit.getDefaultToolkit().sync();
+        Toolkit.getDefaultToolkit().sync(); //helps run
     }
 
 
@@ -229,11 +214,6 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 }
-
-
-
-
-
 
 
 
